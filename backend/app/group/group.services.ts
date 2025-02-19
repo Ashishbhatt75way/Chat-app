@@ -141,7 +141,7 @@ export const joinGroup = async (groupId: string, memberId: string) => {
 
 export const getJoinedGroups = async (userId: string) => {
   const groups = await groupSchema.find({ members: userId })
-  return groups
+  return groups;
 }
 
 export const requestToJoinGroup = async (groupId: string, userId: string) => {

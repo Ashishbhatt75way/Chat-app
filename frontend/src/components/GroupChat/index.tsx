@@ -25,13 +25,7 @@ interface User {
   name: string;
 }
 
-interface ResponseMessage {
-  _id: string;
-  sender: User;
-  groupId: string;
-  content: string;
-  timestamp: string;
-}
+
 
 interface GroupChatProps {
   groupId: string;
@@ -95,7 +89,7 @@ const GroupChat: React.FC<GroupChatProps> = ({ groupId, user }) => {
           </div>
         )}
         {isSuccess &&
-          data?.data?.map((message: ResponseMessage) => (
+          data?.data.map((message: Message) => (
             <Box
               key={message._id}
               sx={{

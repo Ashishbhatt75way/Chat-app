@@ -21,15 +21,15 @@ router
     passport.authenticate("login", { session: false }),
     userController.login
   )
-  .get("/me", roleAuth(["USER"]), userController.getUserInfo)
-  .post("/logout", roleAuth(["USER"]), userController.logout)
-  .delete("/:id", roleAuth(["USER"]), userController.deleteUser)
+  .get("/me", roleAuth(["USER", "ADMIN"]), userController.getUserInfo)
+  .post("/logout", roleAuth(["USER", "ADMIN"]), userController.logout)
+  .delete("/:id", roleAuth(["USER", "ADMIN"]), userController.deleteUser)
   .patch(
     "/:id",
     roleAuth(["ADMIN", "USER"]),
     userValidator.editUser,
     catchError,
     userController.editUser
-  ).get('/get-analytics', roleAuth(["USER"]), userController.getAnalytics)
+  ).get('/get-analytics', roleAuth(["ADMIN"]), userController.getAnalytics)
 
 export default router;

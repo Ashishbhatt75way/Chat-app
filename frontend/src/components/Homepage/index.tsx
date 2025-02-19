@@ -26,7 +26,7 @@ const Dashboard = () => {
             color='primary'
             sx={{ fontWeight: 'bold', mb: 2 }}
           >
-            Welcome, {userData?.data.name}!
+            Welcome, {userData?.data.role}!
           </Typography>
           <Typography variant='h5' color='textSecondary' sx={{ mb: 4 }}>
             Let’s get you back into your groups and start chatting!

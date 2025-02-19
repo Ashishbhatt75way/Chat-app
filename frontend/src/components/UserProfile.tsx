@@ -9,6 +9,8 @@ const UserProfile = () => {
   const { data, isLoading } = useMeQuery(undefined, { skip: !isAuthenticated });
   const { data: joinRequestsData } = useGetJoinRequestsQuery();
 
+  console.log(joinRequestsData);
+
   if (isLoading) {
     return (
       <Box
@@ -56,7 +58,7 @@ const UserProfile = () => {
         </Box>
       </Box>
 
-      {joinRequestsData?.data.length !== 0 && (
+      {joinRequestsData?.data && (
         <Box sx={{ marginTop: 5 }}>
           <Typography variant='h6' fontWeight='bold' sx={{ marginBottom: 2 }}>
             Approvals Pending

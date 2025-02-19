@@ -24,13 +24,13 @@ function App() {
         <Route
           path='/create-group'
           element={
-            <ProtectedRoute element={<GroupForm />} allowedRoles={['admin']} />
+            <ProtectedRoute element={<GroupForm />} allowedRoles={['ADMIN']} />
           }
         />
         <Route
           path='/analytics'
           element={
-            <ProtectedRoute element={<Analytics />} allowedRoles={['admin']} />
+            <ProtectedRoute element={<Analytics />} allowedRoles={['ADMIN']} />
           }
         />
       </Route>

@@ -5,6 +5,7 @@ const baseUrl = import.meta.env.VITE_API_URL
 
 export const api = createApi({
   reducerPath: 'api',
+  tagTypes: ['Users'],
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrl,
     prepareHeaders: (headers, { getState }) => {
@@ -18,6 +19,7 @@ export const api = createApi({
   endpoints: (builder) => ({
     me: builder.query<ApiResponse<User>, void>({
       query: () => `/users/me`,
+      providesTags: ['Users'],
     }),
     login: builder.mutation<
       ApiResponse<{ accessToken: string; refreshToken: string }>,
@@ -44,6 +46,7 @@ export const api = createApi({
       query: () => {
         return { url: `/users/logout`, method: 'POST' }
       },
+      invalidatesTags: ['Users'],
     }),
     getAnalytics: builder.query<ApiResponse<any>, void>({
       query: () => `/users/get-analytics`,

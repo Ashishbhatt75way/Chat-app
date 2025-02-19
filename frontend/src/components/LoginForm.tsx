@@ -87,10 +87,10 @@ export default function LoginForm() {
     >
       <Card variant="outlined" sx={style.root}>
         <CardContent>
-          <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+          <Box sx={{ textAlign: "center" , m: 2 }} component="form" onSubmit={handleSubmit(onSubmit)}>
             <Box>
               <Typography variant="h4" component="h1">
-                <b>Welcome!</b>
+                <b>Welcome To Chat App</b>
               </Typography>
               <Typography my={1}>Sign in to continue.</Typography>
             </Box>

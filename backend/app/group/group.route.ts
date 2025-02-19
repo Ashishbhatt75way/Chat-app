@@ -6,10 +6,10 @@ import { roleAuth } from '../common/middleware/role-auth.middleware'
 
 const router = Router()
 
-router.get('/joined', roleAuth(['USER']), groupController.getJoinedGroups)
+router.get('/joined', roleAuth(['USER', 'ADMIN']), groupController.getJoinedGroups)
 router.get(
   '/join-requests',
-  roleAuth(['USER']),
+  roleAuth(['ADMIN']),
   catchError,
   groupController.getJoinRequests,
 )
@@ -17,11 +17,12 @@ router.get('/', groupController.getAllGroup)
 router.delete('/:id', groupController.deleteGroup)
 router.post(
   '/',
+  roleAuth(['ADMIN']),
   groupValidator.createGroup,
   catchError,
   groupController.createGroup,
 )
-router.get('/:id', roleAuth(['USER']), groupController.getGroupById)
+router.get('/:id', roleAuth(['USER', 'ADMIN']), groupController.getGroupById)
 router.put(
   '/:id',
   groupValidator.updateGroup,
@@ -56,13 +57,13 @@ router.post(
 )
 router.post(
   '/:id/approve',
-  roleAuth(['USER']),
+  roleAuth(['ADMIN']),
   catchError,
   groupController.approveRequest,
 )
 router.delete(
   '/:id/decline',
-  roleAuth(['USER']),
+  roleAuth(['ADMIN']),
   catchError,
   groupController.declineRequest,
 )

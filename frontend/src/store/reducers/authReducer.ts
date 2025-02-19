@@ -2,7 +2,6 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { api } from "../../services/api";
 
-// Define a type for the slice state
 interface AuthState {
   accessToken: string;
   refreshToken: string;
@@ -10,7 +9,6 @@ interface AuthState {
   loading: boolean;
 }
 
-// Define the initial state using that type
 const initialState: AuthState = {
   accessToken: localStorage.getItem('access_token') ?? "",
   refreshToken: localStorage.getItem('refresh_token') ?? "",
@@ -38,7 +36,6 @@ export const authSlice = createSlice({
       state.refreshToken = "";
       state.isAuthenticated = false;
     },
-
   },
   extraReducers: (builder) => {
     builder
