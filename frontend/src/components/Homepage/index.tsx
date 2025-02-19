@@ -1,12 +1,10 @@
 import { Chat, GroupAdd } from '@mui/icons-material';
 import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/store';
 import { useMeQuery } from '../../services/api';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user } = useAppSelector((state: { auth: any }) => state.auth);
   const { data: userData } = useMeQuery();
   const handleCreateGroup = () => {
     navigate('/create-group');

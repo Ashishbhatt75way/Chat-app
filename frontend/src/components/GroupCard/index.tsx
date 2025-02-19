@@ -4,8 +4,7 @@ import {
   Button,
   Card,
   CardContent,
-  CardHeader,
-  Typography,
+  Typography
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -29,9 +28,7 @@ const GroupCard = ({
   };
 }) => {
   const [join, { isLoading }] = useJoinMutation();
-  const { isAuthenticated } = useAppSelector(
-    (state: { auth: any }) => state.auth
-  );
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { data } = useMeQuery(undefined, { skip: !isAuthenticated });
   const navigate = useNavigate();
   const [requestToJoin, { isLoading: isRequestToJoinLoading }] =
@@ -43,20 +40,15 @@ const GroupCard = ({
         const response = await join({
           groupId: group._id,
           userId: data.data._id,
-        });
+        }).unwrap();
 
         if (response.data) {
           toast.success('Group joined successfully!');
           navigate(`/chat/${group._id}`);
         }
-
-        if (response.error) {
-          toast.error(response.error?.data.message);
-        
-        }
       }
     } catch (error) {
-      console.error('Error joining group:', error);
+      toast.error('Something went wrong!');
     }
   };
 
@@ -66,12 +58,10 @@ const GroupCard = ({
 
       if (response.error) {
         toast.error(response?.error?.data.message);
-  
       }
 
       if (response.data) {
         toast.success('Request sent to admin!');
-     
       }
     } catch (error) {
       console.error('Error requesting to join group:', error);
@@ -81,7 +71,7 @@ const GroupCard = ({
   return (
     <Card sx={{ maxWidth: 350, p: 2, borderRadius: 3, boxShadow: 3 }}>
       <div style={{ marginLeft: '15px' }} className='flex items-center'>
-        <Avatar sx={{ bgcolor: 'primary.main', mr: 2 , size: 20 }} />
+        <Avatar sx={{ bgcolor: 'primary.main', mr: 2, size: 20 }} />
         <Typography sx={{ p: 0, mb: 0.5, fontSize: 16 }}>
           {group.name}
         </Typography>

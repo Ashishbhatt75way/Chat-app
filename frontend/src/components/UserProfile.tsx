@@ -9,8 +9,6 @@ const UserProfile = () => {
   const { data, isLoading } = useMeQuery(undefined, { skip: !isAuthenticated });
   const { data: joinRequestsData } = useGetJoinRequestsQuery();
 
-  console.log(joinRequestsData);
-
   if (isLoading) {
     return (
       <Box

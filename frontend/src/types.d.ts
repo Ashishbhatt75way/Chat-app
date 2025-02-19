@@ -36,3 +36,10 @@ interface Message {
   content: string;
   timestamp: Date;
 }
+
+interface Analytics {
+  totalGroups: number;
+  totalUsers: number;
+  totalMessages: number;
+  totalGroupUsers: number;
+}

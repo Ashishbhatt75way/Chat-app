@@ -19,7 +19,6 @@ export const getAllGroup = async () => {
 }
 
 export const getGroupById = async (id: string) => {
-  console.log(id)
   const result = await groupSchema.findById(id).lean()
   return result
 }

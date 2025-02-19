@@ -41,8 +41,8 @@ Ensure you have the following installed:
 
 ### Clone the Repository
 ```bash
-  git clone https://github.com/your-repo/group-chat-app.git
-  cd group-chat-app
+  git clone https://github.com/Ashishbhatt75way/Chat-app.git
+  cd Chat-app
 ```
 
 ### Backend Setup
