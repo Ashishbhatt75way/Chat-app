@@ -52,7 +52,7 @@ const GroupCard = ({
 
         if (response.error) {
           toast.error(response.error?.data.message);
-          console.log(response.error?.data.message);
+        
         }
       }
     } catch (error) {
@@ -66,12 +66,12 @@ const GroupCard = ({
 
       if (response.error) {
         toast.error(response?.error?.data.message);
-        console.log(response?.error?.data.message);
+  
       }
 
       if (response.data) {
         toast.success('Request sent to admin!');
-        console.log(response?.data);
+     
       }
     } catch (error) {
       console.error('Error requesting to join group:', error);

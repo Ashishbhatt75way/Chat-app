@@ -1,19 +1,18 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { RootState } from "../store/store";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { RootState } from '../store/store'
 
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = import.meta.env.VITE_API_URL
 
 export const api = createApi({
-  reducerPath: "api",
+  reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrl,
     prepareHeaders: (headers, { getState }) => {
-      // Access the state from Redux
-      const token = (getState() as RootState).auth.accessToken;
+      const token = (getState() as RootState).auth.accessToken
       if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
+        headers.set('Authorization', `Bearer ${token}`)
       }
-      return headers;
+      return headers
     },
   }),
   endpoints: (builder) => ({
@@ -25,32 +24,32 @@ export const api = createApi({
       { email: string; password: string }
     >({
       query: (body) => {
-        return { url: `/users/login`, method: "POST", body };
+        return { url: `/users/login`, method: 'POST', body }
       },
     }),
     register: builder.mutation<
       ApiResponse<User>,
-      Omit<User, "_id" | "active" | "role"> & { confirmPassword: string }
+      Omit<User, '_id' | 'active' | 'role'> & { confirmPassword: string }
     >({
       query: (body) => {
-        return { url: `/users/register`, method: "POST", body };
+        return { url: `/users/register`, method: 'POST', body }
       },
     }),
     updateUser: builder.mutation<ApiResponse<User>, User>({
       query: (body) => {
-        return { url: `/users/${body._id}`, method: "PUT", body };
+        return { url: `/users/${body._id}`, method: 'PUT', body }
       },
     }),
     logout: builder.mutation<void, void>({
       query: () => {
-        return { url: `/users/logout`, method: "POST" };
+        return { url: `/users/logout`, method: 'POST' }
       },
     }),
     getAnalytics: builder.query<ApiResponse<any>, void>({
-      query: () => `/analytics`,
+      query: () => `/users/get-analytics`,
     }),
   }),
-});
+})
 
 export const {
   useMeQuery,
@@ -58,4 +57,5 @@ export const {
   useLogoutMutation,
   useRegisterMutation,
   useUpdateUserMutation,
-} = api;
+  useGetAnalyticsQuery,
+} = api

@@ -196,8 +196,6 @@ export const declineJoinRequest = async (
 
   if (group.admin.toString() !== adminId)
     throw new Error('Only admin can decline requests')
-
-  console.log(group.pendingInvites , userId);
   if (!group.pendingInvites.includes(userId))
     throw new Error('No request found')
   group.pendingInvites = group.pendingInvites.filter(

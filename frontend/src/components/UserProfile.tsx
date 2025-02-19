@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { useMeQuery } from '../services/api';
 import { useGetJoinRequestsQuery } from '../services/group-api';
+import { useGetAnalyticsQuery } from '../services/api';
 import { useAppSelector } from '../store/store';
 import GroupRequestCard from './GroupRequestCard';
 
@@ -24,7 +25,9 @@ const UserProfile = () => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { data, isLoading } = useMeQuery(undefined, { skip: !isAuthenticated });
   const { data: joinRequestsData } = useGetJoinRequestsQuery();
-  console.log(joinRequestsData);
+  const { data: analyticsData } = useGetAnalyticsQuery();
+
+  console.log('analytics', analyticsData);
 
   if (isLoading) {
     return (

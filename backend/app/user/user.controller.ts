@@ -54,3 +54,10 @@ export const logout = asyncHandler(async (req: Request, res: Response) => {
     // To do: Remove session
     res.send(createResponse({}))
 });
+
+export const getAnalytics = asyncHandler(async (req: Request, res: Response) => {
+    const result = await userService.getAnalytics();
+    res.send(createResponse(result , "Analytics fetched successfully"));
+
+})
+

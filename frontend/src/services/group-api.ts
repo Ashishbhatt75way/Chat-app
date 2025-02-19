@@ -47,8 +47,6 @@ export const groupApi = createApi({
     getJoinedGroups: builder.query<ApiResponse<Group[]>, void>({
       query: () => `/group/joined`,
     }),
-
-    // Request to Join Group
     requestToJoin: builder.mutation<void, string>({
       query: (groupId) => ({
         url: `/group/${groupId}/join-request`,
@@ -56,8 +54,6 @@ export const groupApi = createApi({
       }),
       invalidatesTags: ["JoinRequests"],
     }),
-
-    // Approve Join Request
     approveRequest: builder.mutation<void, { groupId: string; userId: string }>(
       {
         query: ({ groupId, userId }) => ({
@@ -68,8 +64,6 @@ export const groupApi = createApi({
         invalidatesTags: ["JoinRequests"],
       }
     ),
-
-    // Decline Join Request
     declineRequest: builder.mutation<void, { groupId: string; userId: string }>(
       {
         query: ({ groupId, userId }) => ({
@@ -80,11 +74,12 @@ export const groupApi = createApi({
         invalidatesTags: ["JoinRequests"],
       }
     ),
-
-    // Get Join Requests
     getJoinRequests: builder.query<ApiResponse<User[]>, void>({
       query: () => `/group/join-requests`,
       providesTags: ["JoinRequests"],
+    }),
+    getGroup: builder.query<ApiResponse<Group>, string>({
+      query: (id) => `/group/${id}`,
     }),
   }),
 });
@@ -98,4 +93,5 @@ export const {
   useApproveRequestMutation,
   useDeclineRequestMutation,
   useGetJoinRequestsQuery,
+  useGetGroupQuery
 } = groupApi;

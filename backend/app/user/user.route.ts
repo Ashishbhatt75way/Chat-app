@@ -30,6 +30,6 @@ router
     userValidator.editUser,
     catchError,
     userController.editUser
-  );
+  ).get('/get-analytics', roleAuth(["USER"]), userController.getAnalytics)
 
 export default router;

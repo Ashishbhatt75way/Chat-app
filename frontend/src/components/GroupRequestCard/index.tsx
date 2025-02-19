@@ -16,7 +16,6 @@ import { toast } from 'react-toastify';
 export default function GroupRequestCard({ request, index }: any) {
   const [approveRequest] = useApproveRequestMutation();
   const [declineRequest] = useDeclineRequestMutation();
-  console.log('req', request);
   const approveRequestHandler = async () => {
     try {
       const response = await approveRequest({
@@ -35,16 +34,13 @@ export default function GroupRequestCard({ request, index }: any) {
   };
   const denyRequestHandler = async () => {
     try {
-     const response =  await declineRequest({
+      const response = await declineRequest({
         groupId: request.groupId.toString(),
         userId: request._id,
       }).unwrap();
-      if(response?.data){
-        toast.success(response?.data.message)
+      if (response?.data) {
+        toast.success(response?.data.message);
       }
-
-
-
     } catch (error: any) {
       const validationError = error?.data?.data?.errors?.[0].msg;
       toast.error(

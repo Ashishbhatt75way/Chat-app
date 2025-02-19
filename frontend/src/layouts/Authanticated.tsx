@@ -74,7 +74,7 @@ export default function Authanticated() {
             sx={{ textDecoration: "none" }}
           >
             <Typography color="white" variant="h6" sx={{ flexGrow: 1 }}>
-              App Logo
+              Chat App
             </Typography>
           </Box>
           {isAuthenticated && (

@@ -74,7 +74,6 @@ export default function AddGroupForm() {
     mode: "onChange",
   });
 
-  console.log(data);
   const onSubmit = async (formData: FormData) => {
     try {
       const form = {

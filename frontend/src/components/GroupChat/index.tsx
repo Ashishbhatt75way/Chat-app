@@ -3,6 +3,7 @@ import {
   Avatar,
   Box,
   Button,
+  CircularProgress,
   Paper,
   TextField,
   Typography,
@@ -14,6 +15,7 @@ import {
   useGetMessagesQuery,
   useSendMessageMutation,
 } from '../../services/message-api';
+import { useGetGroupQuery } from '../../services/group-api';
 import { useMeQuery } from '../../services/api';
 import { useAppSelector } from '../../store/store';
 import { toast } from 'react-toastify';
@@ -39,7 +41,7 @@ interface GroupChatProps {
 const GroupChat: React.FC<GroupChatProps> = ({ groupId, user }) => {
   const [messageInput, setMessageInput] = useState<string>('');
   const { data, isSuccess, isLoading } = useGetMessagesQuery(groupId);
-
+  const { data: group } = useGetGroupQuery(groupId);
   const [sendMessage] = useSendMessageMutation();
 
   const handleSendMessage = async () => {
@@ -74,8 +76,8 @@ const GroupChat: React.FC<GroupChatProps> = ({ groupId, user }) => {
           color: 'white',
         }}
       >
-        <Avatar sx={{ width: 36, height: 36 }}>G</Avatar>
-        <Typography variant='h6'>{`${groupId}`}</Typography>
+        <Avatar sx={{ width: 36, height: 36 }}>{group?.data.name.charAt(0)}</Avatar>
+        <Typography variant='h6'>{`${group?.data.name}`}</Typography>
       </Box>
 
       <Box
@@ -87,13 +89,18 @@ const GroupChat: React.FC<GroupChatProps> = ({ groupId, user }) => {
           flexDirection: 'column',
         }}
       >
-        {isLoading && <Typography>Loading messages...</Typography>}
+        {isLoading && (
+          <div className='flex justify-center items-center h-screen'>
+            <CircularProgress />
+          </div>
+        )}
         {isSuccess &&
           data?.data?.map((message: ResponseMessage) => (
             <Box
               key={message._id}
               sx={{
                 display: 'flex',
+                paddingX: '10px',
                 justifyContent:
                   message.sender._id === user._id ? 'flex-end' : 'flex-start',
                 marginBottom: '10px',
@@ -101,8 +108,9 @@ const GroupChat: React.FC<GroupChatProps> = ({ groupId, user }) => {
             >
               <Paper
                 sx={{
-                  maxWidth: '60%',
-                  padding: '10px',
+                  maxWidth: '80%',
+                  paddingX: '20px',
+                  paddingY: '5px',
                   borderRadius: '10px',
                   backgroundColor:
                     message.sender._id === user._id ? '#010101' : '#f0f0f0',
@@ -112,16 +120,30 @@ const GroupChat: React.FC<GroupChatProps> = ({ groupId, user }) => {
                 }}
               >
                 {message.sender._id !== user._id && (
-                  <Avatar sx={{ width: 24, height: 24, marginRight: '10px' }}>
+                  <Avatar sx={{ width: 24, height: 24, marginRight: '8px' }}>
                     {message.sender.name.charAt(0).toUpperCase()}
                   </Avatar>
                 )}
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                  <Typography variant='body1' sx={{ fontWeight: 'bold' }}>{message.sender.name}</Typography>
-                  <Typography variant='body2' sx={{color: 'gray'}}>{message.content}</Typography>
+                  <Typography
+                    variant='body1'
+                    textAlign={
+                      message.sender._id === user._id ? 'right' : 'left'
+                    }
+                    sx={{ fontWeight: '400' }}
+                  >
+                    {message.sender.name}
+                  </Typography>
+                  <Typography variant='body2' sx={{ color: 'gray' }}>
+                    {message.content}
+                  </Typography>
                   <Typography
                     variant='caption'
-                    sx={{ textAlign: 'right', color: 'gray' }}
+                    sx={{
+                      textAlign:
+                        message.sender._id === user._id ? 'left' : 'right',
+                      color: 'gray',
+                    }}
                   >
                     {dayjs(message.timestamp).format('h:mm A')}
                   </Typography>
@@ -175,7 +197,12 @@ const App: React.FC = () => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { data } = useMeQuery(undefined, { skip: !isAuthenticated });
 
-  if (!data?.data) return <Typography>Loading...</Typography>;
+  if (!data?.data)
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <CircularProgress />
+      </div>
+    );
 
   return <GroupChat groupId={groupId} user={data.data} />;
 };

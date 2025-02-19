@@ -1,6 +1,8 @@
 
+import groupSchema from '../group/group.schema';
 import { type IUser } from "./user.dto";
 import UserSchema from "./user.schema";
+import {Message} from "../message/message.schema";
 
 export const createUser = async (data: IUser) => {
     const result = await UserSchema.create({ ...data, active: true });
@@ -42,3 +44,20 @@ export const getUserByEmail = async (email: string, withPassword = false) => {
     return result;
 }
 
+export const getAnalytics = async () => {
+    const totalUsers = await UserSchema.countDocuments();
+    const totalGroups = await groupSchema.countDocuments();
+    const totalMessages = await Message.countDocuments();
+
+    const totalGroupUsers = await groupSchema.aggregate([
+        { $unwind: "$members" }, 
+        { $group: { _id: null, total: { $sum: 1 } } } 
+    ]);
+
+    return {
+        totalUsers,
+        totalGroups,
+        totalGroupUsers : totalGroupUsers[0]?.total || 0,
+        totalMessages,
+    };
+}
