@@ -25,6 +25,7 @@ export default function Authanticated() {
   const handleClose = (
     route?:
       | "profile"
+      | "analytics"
       | "logout"
       | "groups"
       | "home"
@@ -104,6 +105,7 @@ export default function Authanticated() {
                 onClose={handleClose()}
               >
                 <MenuItem onClick={handleClose("home")}>Home</MenuItem>
+                <MenuItem onClick={handleClose("analytics")}>Analytics</MenuItem>
                 <MenuItem onClick={handleClose("profile")}>Profile</MenuItem>
                 <MenuItem onClick={handleClose("create-group")}>
                   Create Group
